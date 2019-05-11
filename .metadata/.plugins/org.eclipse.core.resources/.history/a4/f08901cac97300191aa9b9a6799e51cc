@@ -1,0 +1,46 @@
+package it.danilo.email;
+
+import it.danilo.encryption.EncryptionType;
+
+public class Email {
+	
+	public Email() {}
+	
+	public Email(boolean plainText, boolean outside, boolean retry, EncryptionType encryptionType) {
+		super();
+		this.plainText = plainText;
+		this.outside = outside;
+		this.retry = retry;
+		this.encryptionType = encryptionType;
+	}
+	private boolean plainText;
+	private boolean outside;
+	private boolean retry;
+	private EncryptionType encryptionType;
+	
+	public boolean isPlainText() {
+		return plainText;
+	}
+	public void setPlainText(boolean plainText) {
+		this.plainText = plainText;
+	}
+	public boolean isOutside() {
+		return outside;
+	}
+	public void setOutside(boolean outside) {
+		this.outside = outside;
+	}
+	public boolean isRetry() {
+		return retry;
+	}
+	public void setRetry(boolean retry) {
+		this.retry = retry;
+	}
+	public EncryptionType getEncryptionType() {
+		return encryptionType;
+	}
+	public void setEncryptionType(EncryptionType encryptionType) {
+		this.encryptionType = encryptionType;
+	}
+
+}

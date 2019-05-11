@@ -1,0 +1,37 @@
+package it.danilo.email;
+
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import it.danilo.util.Constants;
+import it.danilo.util.MailPropertyUtil;
+
+public class EmailServiceImpl implements EmailService {
+
+	@Override
+	public void sendEmail(Email email) throws Exception{
+		MailPropertyUtil mailPropertyUtil = new MailPropertyUtil();
+		// Get the session object
+		Properties props = new Properties();
+		props.put("mail.smtp.host", mailPropertyUtil.getPropertyValue(propertyKey));
+
+		Session session = Session.getDefaultInstance(props);
+		MimeMessage message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(Constants.EMAIL_USER));
+		message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		message.setSubject("EMAIL");
+		message.setText("This is simple program of sending email using JavaMail API");
+
+		// send the message
+		Transport.send(message);
+
+		System.out.println("message sent successfully...");
+
+	}
+
+}

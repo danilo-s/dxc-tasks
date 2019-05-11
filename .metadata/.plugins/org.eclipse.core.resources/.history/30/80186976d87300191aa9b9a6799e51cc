@@ -1,0 +1,8 @@
+email.host=smtp.gmail.com
+email.username=danilo.santabarbara@gmail.com
+email.password=ZioPorcon4
+email.from=danilo.santabarbara@gmail.com
+email.to=danilo.santabarbara@gmail.com
+email.subject=Test email
+email.body=Hi, this is an email!
+email.disclaimer=Hi, this is a disclaimer!

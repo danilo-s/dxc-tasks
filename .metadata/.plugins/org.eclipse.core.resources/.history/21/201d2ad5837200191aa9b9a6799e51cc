@@ -1,0 +1,41 @@
+package it.danilo.main;
+
+public class Task {
+	
+//	Write a method starString that takes an integer ‘n’ as an argument and returns a string of stars (asterisks) 2^n long (i.e., 2 to the nth power).  For example:
+//
+//        starString(0) should return "*" (because 2^0 == 1)
+//
+//        starString(1) should return "**" (because 2^1 == 2)
+//
+//        starString(2) should return "****" (because 2^2 == 4)
+//
+//        starString(3) should return "********" (because 2^3 == 8)
+//
+//        starString(4) should return "****************" (because 2^4 == 16)
+//
+//Your method should take a single integer parameter that specifies the power of 2 
+	//and it should return a String with that number of asterisks in it and should not use any functions
+	//from the ‘java.lang.math’ package nor the signed left shift operator nor 
+	//any equivalent function/operator.
+	
+	public static void main(String[] args) {
+		StringBuilder sb = new StringBuilder();
+		sb.insert(2, "*");
+		//System.out.println(starString(sb,4));
+		System.out.println(sb.toString());
+	}
+	
+	private static String starString(StringBuilder sb, int n) {
+		if(n==0) {
+			sb.append("*");
+			return sb.toString();
+		}
+		else if (n==1) {
+			sb.append("**");
+			return sb.toString();
+		}else	
+			return starString(sb, n-1);
+	}
+
+}

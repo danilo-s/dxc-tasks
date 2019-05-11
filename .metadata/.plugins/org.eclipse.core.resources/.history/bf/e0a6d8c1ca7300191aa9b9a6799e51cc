@@ -1,0 +1,20 @@
+package it.danilo.email;
+
+
+public class EmailFactory {
+
+	public static Email getEmail(String scenario1) {
+		switch (scenario1) {
+		case "SCENARIO1":
+			
+			break;
+
+		default:
+			break;
+		}
+		return null;
+	}
+	
+	
+
+}

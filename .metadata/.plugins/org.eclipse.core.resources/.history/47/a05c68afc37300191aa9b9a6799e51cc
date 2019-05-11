@@ -1,0 +1,15 @@
+package it.danilo.util;
+
+public class Constants {
+	
+	public static final Integer RETRY_LIMIT=3;
+	
+	static final String SCENARIO1="SCENARIO1";
+	static final String SCENARIO2="SCENARIO2";
+	static final String SCENARIO3="SCENARIO3";
+	static final String SCENARIO4="SCENARIO4";
+
+
+	
+
+}

@@ -1,0 +1,31 @@
+package it.danilo.email;
+
+import it.danilo.encryption.EncryptionType;
+import it.danilo.util.Constants;
+
+public class EmailFactory {
+
+	public static Email getEmail(String scenario1) {
+		Email result=null;
+		switch (scenario1) {
+		case Constants.SCENARIO1:
+			result=new Email(true, true, false, EncryptionType.NONE,"danilo.santabarbara@gmail.com");
+			break;
+		case Constants.SCENARIO2:
+			result=new Email(true, true, false, EncryptionType.NONE,"danilo.santabarbara@gmail.com");
+			break;
+		case Constants.SCENARIO3:
+			result=new Email(true, true, false, EncryptionType.NONE,"danilo.santabarbara@gmail.com");
+			break;
+		case Constants.SCENARIO4:
+			result=new Email(true, true, false, EncryptionType.NONE,"danilo.santabarbara@gmail.com");
+			break;
+		default:
+			break;
+		}
+		return result;
+	}
+	
+	
+
+}

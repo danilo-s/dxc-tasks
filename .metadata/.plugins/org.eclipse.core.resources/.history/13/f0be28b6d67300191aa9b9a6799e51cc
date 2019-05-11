@@ -1,0 +1,26 @@
+package it.danilo.util;
+
+import java.io.InputStream;
+import java.util.Properties;
+
+public class MailUtility {
+
+	final static String MAIL_PROPERTY_FILE  = "mail.properties";
+
+	public String getPropertyValue(String propertyKey) {
+		String result = null;
+		try (InputStream input = getClass().getClassLoader().getResourceAsStream(MAIL_PROPERTY_FILE)){
+            Properties prop = new Properties();
+            prop.load(input);
+            result=(String) prop.get(propertyKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String encryptBody(String body) {
+		
+	}
+
+}

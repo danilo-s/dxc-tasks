@@ -1,0 +1,5 @@
+package it.danilo.util;
+
+public class DESEncryption {
+
+}

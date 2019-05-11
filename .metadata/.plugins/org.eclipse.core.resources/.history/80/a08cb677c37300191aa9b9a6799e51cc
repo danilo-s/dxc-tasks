@@ -1,0 +1,13 @@
+package it.danilo.email;
+
+
+public class EmailFactory {
+
+	public static Email getEmail(String scenario1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
+}

@@ -1,0 +1,11 @@
+package it.danilo.email;
+
+public class EmailServiceImpl implements EmailService {
+
+	@Override
+	public void sendEmail(Email email) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

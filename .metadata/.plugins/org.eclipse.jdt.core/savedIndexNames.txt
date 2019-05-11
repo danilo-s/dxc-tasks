@@ -1,0 +1,5 @@
+INDEX VERSION 1.130+D:\sviluppo\eclipse_ws\test_dxc\.metadata\.plugins\org.eclipse.jdt.core
+2059960770.index
+2632885671.index
+1632698406.index
+99087389.index

@@ -1,0 +1,84 @@
+package it.danilo.email;
+
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import it.danilo.util.Constants;
+import it.danilo.util.MailPropertyUtil;
+
+public class EmailServiceImpl implements EmailService {
+
+	@Override
+	public void sendEmail(Email email) throws Exception {
+		MailPropertyUtil mailPropertyUtil = new MailPropertyUtil();
+		// Get the session object
+		Properties props = new Properties();
+		props.put("mail.smtp.host", mailPropertyUtil.getPropertyValue("email.host"));
+		// just for testing purposess
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(mailPropertyUtil.getPropertyValue("email.username"),
+						mailPropertyUtil.getPropertyValue("email.password"));
+			}
+		});
+
+		MimeMessage message = buildMessage(session, email, mailPropertyUtil.getPropertyValue("email.from"),
+				mailPropertyUtil.getPropertyValue("email.to"));
+		// send the message
+		boolean sent = false;
+		int c = 0;
+
+		if (!email.isRetry())
+			Transport.send(message);
+		else {
+			while (!sent && c < Constants.RETRY_LIMIT) {
+				try {
+					Transport.send(message);
+					sent = true;
+					System.out.println("message sent");
+
+				} catch (Exception e) {
+					System.out.println("message not sent, attempt ="+c);
+					c++;
+				}
+			}
+		}
+	}
+
+	private MimeMessage buildMessage(Session session, Email email, String from, String to)
+			throws AddressException, MessagingException {
+		MimeMessage message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(from));
+		message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		message.setSubject("test email");
+
+		String text = "";
+		String disclaimer = "";
+
+		if (email.isOutside()) {
+			disclaimer = " this is a disclaimer ";
+		}
+
+		text = text + disclaimer;
+
+		if (email.getBodyType() == BodyType.PLAIN_TEXT) {
+			message.setText(text);
+		} else {
+			message.setText(text, "text/html");
+		}
+		return message;
+	}
+
+}
