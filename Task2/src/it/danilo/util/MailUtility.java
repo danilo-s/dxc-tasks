@@ -3,40 +3,33 @@ package it.danilo.util;
 import java.io.InputStream;
 import java.util.Properties;
 
+import it.danilo.encryption.AESEncryption;
+import it.danilo.encryption.DESEncryption;
 import it.danilo.encryption.EncryptionType;
 
 public class MailUtility {
 
 	final static String MAIL_PROPERTY_FILE = "mail.properties";
 
-	public static String getPropertyValue(String propertyKey) {
+	public static String getPropertyValue(String propertyKey) throws Exception {
 		String result = null;
-		try (InputStream input = MailUtility.class.getClassLoader().getResourceAsStream(MAIL_PROPERTY_FILE)) {
-			Properties prop = new Properties();
-			prop.load(input);
-			result = (String) prop.get(propertyKey);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		InputStream input = MailUtility.class.getClassLoader().getResourceAsStream(MAIL_PROPERTY_FILE);
+		Properties prop = new Properties();
+		prop.load(input);
+		result = (String) prop.get(propertyKey);
+		input.close();
 		return result;
 	}
 
-	public static String encryptBody(StringBuilder stringBuilder, EncryptionType encryptionType) {
+	public static String encryptBody(String body, EncryptionType encryptionType) throws Exception {
 		String result = null;
 		switch (encryptionType) {
 		case AES:
-			result = AESEncryption.encrypt(stringBuilder.toString(), "key");
+			result = AESEncryption.encrypt(body, "key");
 			break;
 		case DES:
-			result = DESEncryption.encrypt(stringBuilder.toString());
+			result = DESEncryption.encrypt(body);
 			break;
-		case DES_AES:
-			result = AESEncryption.encrypt(DESEncryption.encrypt(stringBuilder.toString()), "key");
-			break;
-		case NONE:
-			result = stringBuilder.toString();
-			break;
-
 		default:
 			break;
 		}

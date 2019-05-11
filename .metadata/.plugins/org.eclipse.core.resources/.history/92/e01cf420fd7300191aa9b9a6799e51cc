@@ -1,0 +1,34 @@
+package it.danilo.main;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
+
+@RunWith(Parameterized.class)
+public class MainTaskTest {
+
+	@Parameter(0)
+	public int m1;
+	@Parameter(1)
+	public String result;
+
+	@Parameters
+	public static Collection<Object[]> data() {
+		Object[][] data = new Object[][] { { 0, "*" }, { 1, "**" }, { 3, "********" }, { 4, "****************" }, { 5, "********************************" } };
+		return Arrays.asList(data);
+	}
+
+	@Test
+	public void testMultiplyException() {
+		MainTask tester = new MainTask();
+		assertEquals("Result", result, tester.starString(m1));
+	}
+
+}

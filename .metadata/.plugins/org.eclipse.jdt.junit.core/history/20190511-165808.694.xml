@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MainTaskTest" project="Task1" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="it.danilo.main.MainTaskTest" time="0.0">
+    <testsuite name="[0]" time="0.0">
+      <testcase name="testMultiplyException[0]" classname="it.danilo.main.MainTaskTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[1]" time="0.0">
+      <testcase name="testMultiplyException[1]" classname="it.danilo.main.MainTaskTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[2]" time="0.0">
+      <testcase name="testMultiplyException[2]" classname="it.danilo.main.MainTaskTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[3]" time="0.0">
+      <testcase name="testMultiplyException[3]" classname="it.danilo.main.MainTaskTest" time="0.0"/>
+    </testsuite>
+    <testsuite name="[4]" time="0.0">
+      <testcase name="testMultiplyException[4]" classname="it.danilo.main.MainTaskTest" time="0.0"/>
+    </testsuite>
+  </testsuite>
+</testrun>

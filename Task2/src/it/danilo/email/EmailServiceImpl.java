@@ -26,16 +26,18 @@ public class EmailServiceImpl implements EmailService {
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.port", "587");
 
+		String username = MailUtility.getPropertyValue("email.username");
+		String password = MailUtility.getPropertyValue("email.password");
+
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(MailUtility.getPropertyValue("email.username"),
-						MailUtility.getPropertyValue("email.password"));
+				return new PasswordAuthentication(username, password);
 			}
 		});
 
 		// build message based on email configuration
-		MimeMessage message = buildMessage(session, email, MailUtility.getPropertyValue("email.from"),
-				MailUtility.getPropertyValue("email.to"));
+		MimeMessage message = buildMessage(session, email.getBody(), email.getBodyType(),
+				MailUtility.getPropertyValue("email.from"), MailUtility.getPropertyValue("email.to"));
 
 		// send the message
 		if (!email.isRetry()) {
@@ -67,33 +69,17 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 
-	private MimeMessage buildMessage(Session session, Email email, String from, String to)
-			throws AddressException, MessagingException {
+	private MimeMessage buildMessage(Session session, String body, BodyType bodyType, String from, String to)
+			throws Exception {
 		MimeMessage message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(from));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 		message.setSubject(MailUtility.getPropertyValue("email.subject"));
-
-		StringBuilder stringBuilder = new StringBuilder();
-		if (email.getBodyType() == BodyType.PLAIN_TEXT) {
-			stringBuilder.append(MailUtility.getPropertyValue("email.plain_body"));
-			if (email.isOutside()) {
-				stringBuilder.append(MailUtility.getPropertyValue("email.plain_disclaimer"));
-			}
-			String bodyText = MailUtility.encryptBody(stringBuilder, email.getEncryptionType());
-			message.setText(bodyText);
-
-		}else {
-			stringBuilder.append(MailUtility.getPropertyValue("email.html_body"));
-			if (email.isOutside()) {
-				stringBuilder.append(MailUtility.getPropertyValue("email.html_disclaimer"));
-			}
-			String bodyText = MailUtility.encryptBody(stringBuilder, email.getEncryptionType());
-			message.setText(bodyText, "text/html");
-
-
+		if (bodyType == BodyType.PLAIN_TEXT) {
+			message.setText(body);
+		} else {
+			message.setText(body, "utf-8", "html");
 		}
-
 		return message;
 	}
 

@@ -30,13 +30,12 @@ import it.danilo.util.Constants;
 //-          sending a plain text email to an outside resource and encrypted first with DES and then with AES
 
 public class MainTask {
-	
-	
+
 	public static void main(String[] args) {
-		EmailService es=new EmailServiceImpl();
-		//change scenario based on some rule..
-		Email email=EmailFactory.getEmail(Constants.SCENARIO2);
+		EmailService es = new EmailServiceImpl();
+		// change scenario based on some rule..
 		try {
+			Email email = EmailFactory.getEmail(Constants.SCENARIO4);
 			es.sendEmail(email);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

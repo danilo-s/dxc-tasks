@@ -2,35 +2,60 @@ package it.danilo.email;
 
 import it.danilo.encryption.EncryptionType;
 import it.danilo.util.Constants;
+import it.danilo.util.MailUtility;
 
 public class EmailFactory {
 
-	public static Email getEmail(String scenario1) {
-		Email result=null;
+	public static Email getEmail(String scenario1) throws Exception{
+		Email result = null;
+		StringBuilder bodyBuilder = new StringBuilder();
+		String bodyText = null;
+
 		switch (scenario1) {
 		case Constants.SCENARIO1:
-			//sending a plain text email to an outside resource, with a disclaimer added at the end, unencrypted and no retry
-			result=new Email(BodyType.PLAIN_TEXT, true, false, EncryptionType.NONE);
+			// sending a plain text email to an outside resource, with a disclaimer added at
+			// the end, unencrypted and no retry
+			bodyBuilder.append(MailUtility.getPropertyValue("email.plain_body"));
+			bodyBuilder.append(MailUtility.getPropertyValue("email.plain_disclaimer"));
+			bodyText = bodyBuilder.toString();
+			result = new Email(bodyText, BodyType.PLAIN_TEXT, false);
 			break;
 		case Constants.SCENARIO2:
-			//sending an HTML email to an internal server (so without the disclaimer), encrypted with DES, with the retry functionality
-			result=new Email(BodyType.HTML, false, true, EncryptionType.DES);
+			// sending an HTML email to an internal server (so without the disclaimer),
+			// encrypted with DES, with the retry functionality
+			bodyBuilder.append(MailUtility.getPropertyValue("email.html_body"));
+			bodyText = MailUtility.encryptBody(bodyBuilder.toString(), EncryptionType.DES);
+			result = new Email(bodyText, BodyType.HTML, true);
 			break;
 		case Constants.SCENARIO3:
-			//sending an HTML email to an outside resource, with a disclaimer added at the end and encrypted with AES with retries in case of errors
-			result=new Email(BodyType.HTML, true, true, EncryptionType.AES);
+			// sending an HTML email to an outside resource, with a disclaimer added at the
+			// end and encrypted with AES with retries in case of errors
+			bodyBuilder.append(MailUtility.getPropertyValue("email.html_body"));
+			bodyBuilder.append(MailUtility.getPropertyValue("email.html_disclaimer"));
+			bodyText = MailUtility.encryptBody(bodyBuilder.toString(), EncryptionType.AES);
+			result = new Email(bodyText, BodyType.HTML, true);
 			break;
 		case Constants.SCENARIO4:
-			//sending a plain text email to an outside resource and encrypted first with DES and then with AES
-			result=new Email(BodyType.PLAIN_TEXT, true, false, EncryptionType.DES_AES);
+			// sending a plain text email to an outside resource and encrypted first with
+			// DES and then with AES
+			bodyBuilder.append(MailUtility.getPropertyValue("email.plain_body"));
+			bodyBuilder.append(MailUtility.getPropertyValue("email.plain_disclaimer"));
+			bodyText = MailUtility.encryptBody(MailUtility.encryptBody(bodyBuilder.toString(), EncryptionType.DES),
+					EncryptionType.AES);
+			result = new Email(bodyText, BodyType.PLAIN_TEXT, true);
+			break;
+		case Constants.SCENARIO5:
+			// html not encrypted, for testing purposes
+			bodyBuilder.append(MailUtility.getPropertyValue("email.html_body"));
+			bodyBuilder.append(MailUtility.getPropertyValue("email.html_disclaimer"));
+			bodyText=bodyBuilder.toString();
+			result = new Email(bodyText, BodyType.HTML, true);
 			break;
 		default:
-			//add other scenarios..
+			// add other scenarios..
 			break;
 		}
 		return result;
 	}
-	
-	
 
 }

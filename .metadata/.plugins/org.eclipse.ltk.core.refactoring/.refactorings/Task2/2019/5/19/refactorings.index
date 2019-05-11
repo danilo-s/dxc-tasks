@@ -6,3 +6,6 @@
 1557569125736	Rename type 'AESEncryptor'
 1557569925092	Delete element
 1557570022029	Rename type 'MailPropertyUtil'
+1557583957761	Encapsulate field 'body'
+1557585705469	Move compilation unit
+1557585713461	Move compilation unit
